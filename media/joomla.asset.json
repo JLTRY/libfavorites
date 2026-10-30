@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "favorites",
+  "version": "1.0",
+  "description": "favorites is a plugin thats show your favorites",
+  "license": "GPL-2.0+",
+  "assets": [
+   {
+      "name": "jltry.favorites",
+      "type": "script",
+      "uri": "libfavorites/favorites.js",
+      "dependencies": [
+        "core",
+        "jquery",
+        "url.min"
+      ]
+    },
+    {
+      "name": "url.min",
+      "type": "script",
+      "dependencies": [
+      ],
+      "uri": "libfavorites/url.min.js"
+    },
+    {
+      "name": "jltry.favorites",
+      "type": "style",
+      "uri": "libfavorites/css3treeview.css"
+    },
+    {
+      "name": "jltry.favorites",
+      "type": "preset",
+      "dependencies": [
+        "jltry.favorites#style",
+        "jltry.favorites#script"
+      ]
+    }
+  ]
+}
