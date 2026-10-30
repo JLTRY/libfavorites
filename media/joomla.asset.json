@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
-  "name": "favorites",
+  "name": "libfavorites",
   "version": "1.0",
   "description": "favorites is a plugin thats show your favorites",
   "license": "GPL-2.0+",
@@ -10,9 +10,8 @@
       "type": "script",
       "uri": "libfavorites/favorites.js",
       "dependencies": [
-        "core",
-        "jquery",
-        "url.min"
+        "url.min",
+        "jquery"
       ]
     },
     {

@@ -32,8 +32,8 @@ function changebackground($, item, iconUrl, exists=false) {
 
 jQuery(document).ready(function($) {
     var items = $('.css-treeview .htmlfile').toArray();
-
-    function processNextItem() {
+    console.log("favorites.js is loaded");
+    async function processNextItem() {
 
         var item = items.shift();
         if (!item) return;
