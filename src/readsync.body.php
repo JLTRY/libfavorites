@@ -14,14 +14,15 @@
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
-require_once("htmlitem.php");
-require_once("htmldirectory.php");
-require_once("htmlfile.php");
-require_once("htmlroot.php");
-require_once("jsonfavorites.php");
-require_once("htmlfavorites.php");
+
 
 if (!function_exists('readsync')) {
+    require_once("htmlitem.php");
+    require_once("htmldirectory.php");
+    require_once("htmlfile.php");
+    require_once("htmlroot.php");
+    require_once("jsonfavorites.php");
+    require_once("htmlfavorites.php");
     function readsync($params, &$result)
     {
         if (array_key_exists('jsonfile', $params)) {
