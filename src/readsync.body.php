@@ -2,8 +2,6 @@
 
 namespace JLTRY\LibFavorites;
 
-\defined('_JEXEC') or die;
-
 function readsync($params, &$result)
 {
     if (array_key_exists('jsonfile', $params)) {
@@ -19,24 +17,48 @@ function readsync($params, &$result)
         if (!file_exists($serfile)) { $result = 'File does not exist ' . $serfile; return; }
         $root = HtmlRoot::load($serfile);
         if ($root === null) { $result = 'root is null : ' . $serfile; return; }
-    } else { $root = null; }
+    } else {
+        $root = null;
+    }
 
-    $children = array(); $result = '';
+    $children = array();
+    $result = '';
     if (!is_array($params)) { $result = 'error:' . $params; return false; }
-    if (array_key_exists('url', $params)) { $children = array(new HtmlFile(null, array('title' => isset($params['name']) ? $params['name'] : $params['url'], 'bmkUri' => $params['url']))); $field = 'url'; $find = true; }
-    elseif (array_key_exists('path', $params)) { $path = explode('/', $params['path']); $find = $root ? $root->finditemwithpath($path, $children) : false; $field = 'path'; }
-    elseif (array_key_exists('like', $params)) { $find = $root ? $root->finditemnamed($params['like'], $children, true) : false; $field = 'like'; }
-    elseif (array_key_exists('tag', $params)) { $find = $root ? $root->finditemwithtag($params['tag'], $children) : false; if ($find) { $directory = new HtmlDirectory(null, array()); $directory->addChildren($children); $children = array($directory); } $field = 'tag'; }
-    elseif (array_key_exists('keyword', $params) && $params['keyword'] != 1) { $find = $root ? $root->finditemwithkeyword($params['keyword'], $children) : false; $field = 'keyword'; }
-    elseif (array_key_exists('name', $params)) { $find = $root ? $root->finditemnamed($params['name'], $children) : false; $field = 'name'; }
-    elseif (array_key_exists('id', $params)) { $find = $root ? $root->finditemwithid(urldecode($params['id']), $children) : false; $field = 'id'; }
-    else { if ($root !== null) { $children[] = $root; } $find = $root !== null; }
+    if (array_key_exists('url', $params)) {
+        $children = array(new HtmlFile(null, array('title' => isset($params['name']) ? $params['name'] : $params['url'], 'bmkUri' => $params['url'])));
+        $field = 'url'; $find = true;
+    } elseif (array_key_exists('path', $params)) {
+        $path = explode('/', $params['path']); $find = $root ? $root->finditemwithpath($path, $children) : false; $field = 'path';
+    } elseif (array_key_exists('like', $params)) {
+        $find = $root ? $root->finditemnamed($params['like'], $children, true) : false; $field = 'like';
+    } elseif (array_key_exists('tag', $params)) {
+        $find = $root ? $root->finditemwithtag($params['tag'], $children) : false;
+        if ($find) { $directory = new HtmlDirectory(null, array()); $directory->addChildren($children); $children = array($directory); }
+        $field = 'tag';
+    } elseif (array_key_exists('keyword', $params) && $params['keyword'] != 1) {
+        $find = $root ? $root->finditemwithkeyword($params['keyword'], $children) : false; $field = 'keyword';
+    } elseif (array_key_exists('name', $params)) {
+        $find = $root ? $root->finditemnamed($params['name'], $children) : false; $field = 'name';
+    } elseif (array_key_exists('id', $params)) {
+        $find = $root ? $root->finditemwithid(urldecode($params['id']), $children) : false; $field = 'id';
+    } else {
+        if ($root !== null) { $children[] = $root; }
+        $find = $root !== null;
+    }
 
-    $output = isset($params['output']) ? $params['output'] : 'html'; $level = isset($params['level']) ? $params['level'] : 9999; $openlevel = isset($params['open']) ? $params['open'] : 9999; $keyword = array_key_exists('keyword', $params); $image = isset($params['image']) ? $params['image'] : 'File:Nuvola_apps_download_manager.png'; $head = isset($params['head']) ? $params['head'] : ''; $class = isset($params['class']) ? $params['class'] : '';
+    $output = isset($params['output']) ? $params['output'] : 'html';
+    $level = isset($params['level']) ? $params['level'] : 9999;
+    $openlevel = isset($params['open']) ? $params['open'] : 9999;
+    $keyword = array_key_exists('keyword', $params);
+    $image = isset($params['image']) ? $params['image'] : 'File:Nuvola_apps_download_manager.png';
+    $head = isset($params['head']) ? $params['head'] : '';
+    $class = isset($params['class']) ? $params['class'] : '';
+
     if (!$find) { $result = 'not found :' . (isset($params[$field]) ? $params[$field] : '') . ':'; return -1; }
     if ($output === 'menuitem') { $result .= '<BODY BGCOLOR="#F9C784" OnLoad="FolderInit();ShowAll();"><script language="javascript" src="scripts/tools.js"></script><script language="javascript" src="scripts/menuitem.js"></script>'; }
     if ($output === 'menuitemdiv') { $result .= '<script language="javascript" src="scripts/tools.js"></script><script language="javascript" src="scripts/menuitem.js"></script>'; }
     if (preg_match('/css3treeview/', $output)) { $result .= '<div class="css-treeview ' . $class . '">' . $head; }
+
     foreach ($children as $child) {
         switch ($output) {
             case 'json': $child->writejson(0, $result, false); break;

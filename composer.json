@@ -1,0 +1,22 @@
+{
+  "name": "jltry/libfavorites",
+  "description": "Cross-platform favorites library with Joomla namespace support",
+  "type": "library",
+  "license": "GPL-3.0-or-later",
+  "autoload": {
+    "psr-4": {
+      "JLTRY\\LibFavorites\\": "src/"
+    },
+    "files": [
+      "src/readsync.body.php"
+    ]
+  },
+  "require": {
+    "php": ">=7.4",
+    "ext-json": "*"
+  },
+  "suggest": {
+    "ext-dom": "Required for converting HTML bookmark exports",
+    "ext-curl": "Required for checking bookmark URLs"
+  }
+}
