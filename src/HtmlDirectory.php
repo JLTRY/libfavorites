@@ -4,8 +4,6 @@ namespace JLTRY\LibFavorites;
 
 \defined('_JEXEC') or die;
 
-require_once __DIR__ . '/HtmlItem.php';
-
 class HtmlDirectory extends HtmlItem
 {
     public function __construct($parent, $params) { parent::__construct($parent, $params); }
@@ -54,9 +52,7 @@ class HtmlDirectory extends HtmlItem
                 $result .= $level < $openlevel ? '<input type="checkbox" checked="checked" >' : '<input type="checkbox" >';
             } else { $result .= '<input type="radio" >'; }
             if ($this->m_title !== '') {
-                $result .= $this->m_bmkUri !== null
-                    ? '<label><A class="htmldirectory" HREF="' . $this->m_bmkUri . '">' . $this->m_title . '</A></label>'
-                    : '<label>' . $this->m_title . '</label>';
+                $result .= $this->m_bmkUri !== null ? '<label><A class="htmldirectory" HREF="' . $this->m_bmkUri . '">' . $this->m_title . '</A></label>' : '<label>' . $this->m_title . '</label>';
             }
         }
         if ($level < $maxlevel) {
@@ -86,13 +82,10 @@ class HtmlDirectory extends HtmlItem
             if ($full) { $res = ''; $child->writejson($level + 1, $res, $full, false); $children[] = $res; }
             else { $children[] = $child->getid(); }
         }
-        $fields = array(
-            'id' => $this->m_id, 'type' => 'folder', 'title' => $this->m_title,
+        $fields = array('id' => $this->m_id, 'type' => 'folder', 'title' => $this->m_title,
             'description' => $this->m_description, 'children' => $children,
             'parentid' => $this->m_parent ? $this->m_parent->getid() : -1,
-            'parentName' => $this->m_parent ? $this->m_parent->gettitle() : '',
-            'sortindex' => $this->m_sortindex,
-        );
+            'parentName' => $this->m_parent ? $this->m_parent->gettitle() : '', 'sortindex' => $this->m_sortindex);
         if ($encode) { $result .= json_encode($fields); } else { $result = $fields; }
     }
 

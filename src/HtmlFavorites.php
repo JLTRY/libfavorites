@@ -4,11 +4,6 @@ namespace JLTRY\LibFavorites;
 
 \defined('_JEXEC') or die;
 
-require_once __DIR__ . '/HtmlItem.php';
-require_once __DIR__ . '/HtmlDirectory.php';
-require_once __DIR__ . '/HtmlFile.php';
-require_once __DIR__ . '/HtmlRoot.php';
-
 class HtmlFavorites
 {
     public static function convertNodeToJson($node, $parent)
@@ -25,6 +20,7 @@ class HtmlFavorites
                     break;
             }
         }
+
         if ($node->hasChildNodes()) {
             foreach ($node->childNodes as $child) {
                 $parent = self::convertNodeToJson($child, $parent);
@@ -36,10 +32,10 @@ class HtmlFavorites
 
     public static function converthtmltoroot($file)
     {
-        $dom = new \DOMDocument();
-        \libxml_use_internal_errors(true);
-        $dom->loadHTML(file_get_contents($file), \LIBXML_NOERROR);
-        \libxml_clear_errors();
+        $dom = new \\DOMDocument();
+        \\libxml_use_internal_errors(true);
+        $dom->loadHTML(file_get_contents($file), \\LIBXML_NOERROR);
+        \\libxml_clear_errors();
         $root = new HtmlRoot(-1, '');
         self::convertNodeToJson($dom->documentElement, $root);
         return $root;

@@ -4,9 +4,6 @@ namespace JLTRY\LibFavorites;
 
 \defined('_JEXEC') or die;
 
-require_once __DIR__ . '/HtmlItem.php';
-require_once __DIR__ . '/CheckUrl.php';
-
 class HtmlFile extends HtmlItem
 {
     protected $m_loadInSidebar = false;
@@ -21,7 +18,9 @@ class HtmlFile extends HtmlItem
         parent::__construct($parent, $params);
         foreach (get_class_vars(__CLASS__) as $attr => $value) {
             $field = substr($attr, 2);
-            if (array_key_exists($field, $params)) { $this->$attr = $params[$field]; }
+            if (array_key_exists($field, $params)) {
+                $this->$attr = $params[$field];
+            }
         }
     }
 
@@ -30,7 +29,7 @@ class HtmlFile extends HtmlItem
     public function geturi($check = false, $encode = true)
     {
         if (!$check) { return $this->m_bmkUri; }
-        $result = checkurl($this->m_bmkUri);
+        $result = CheckUrl::checkurl($this->m_bmkUri);
         if ($result === true) { return $encode ? json_encode(true) : true; }
         $result = array('m_id' => $this->m_id, 'm_title' => $this->m_title, 'm_path' => $this->getpath(), 'm_bmkUri' => $this->m_bmkUri, 'm_checkurl' => $result);
         return $encode ? json_encode($result) : $result;

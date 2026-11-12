@@ -4,8 +4,6 @@ namespace JLTRY\LibFavorites;
 
 \defined('_JEXEC') or die;
 
-require_once __DIR__ . '/HtmlDirectory.php';
-
 class HtmlRoot extends HtmlDirectory
 {
     protected $m_user;
@@ -24,12 +22,7 @@ class HtmlRoot extends HtmlDirectory
 
     public function getaccountkeys() { return $this->m_accountkeys; }
     public function setaccountkeys($ar) { $this->m_accountkeys = $ar; }
-
-    public function __sleep()
-    {
-        return array('m_user', 'm_lastmodification', 'm_title', 'm_description', 'm_parent', 'm_listchildren', 'm_id', 'm_modified', 'm_sortindex', 'm_accountkeys');
-    }
-
+    public function __sleep() { return array('m_user', 'm_lastmodification', 'm_title', 'm_description', 'm_parent', 'm_listchildren', 'm_id', 'm_modified', 'm_sortindex', 'm_accountkeys'); }
     public function getlastmodification() { return $this->m_lastmodification; }
     public function setlastmodification($last) { $this->m_lastmodification = $last; }
     public static function load($file) { return unserialize(file_get_contents($file)); }
