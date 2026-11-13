@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
         var item = items.shift();
         if (!item) return;
         var url = new Url(item.href);
-        await new Promise(r => setTimeout(r, 500));
+        await new Promise(r => setTimeout(r, 100));
         if ((url.protocol == 'https') || (url.protocol == 'http')) {
             var requestUrl = uriroot + "index.php?option=com_ajax&plugin=jofavorites&" +
                 "format=json&group=content&method=grabicon&url64=" + btoa(url.protocol + "://" + url.host);

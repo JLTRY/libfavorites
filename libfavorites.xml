@@ -1,8 +1,8 @@
 <extension version="4.0" type="library" method="upgrade">
 <name>JLTRY Favorites Library</name>
 <description>JLTRY Favorites Library - used by JLTRY JO's Favorites</description>
-<version>1.0.0</version>
-<creationDate>October 2026</creationDate>
+<version>1.0.1</version>
+<creationDate>November 12, 2026</creationDate>
 <author>Jean-Luc TRYOEN</author>
 <authorEmail>jltryoen@orange.fr</authorEmail>
 <authorUrl>http://www.jltryoen.fr</authorUrl>
